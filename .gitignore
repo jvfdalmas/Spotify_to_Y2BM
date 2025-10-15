@@ -1,0 +1,2 @@
+# Ignore o arquivo de autenticação que contém informações confidenciais
+headers_auth.json
