@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
-from ytmusicapi import YTMusic
+from ytmusicapi.setup import setup
 
 # Nome do arquivo de saída
 AUTH_FILE = "headers_auth.json"
@@ -20,8 +20,8 @@ if not headers_raw or len(headers_raw) < 10:
     sys.exit(1)
 
 try:
-    # Usa o método setup com headers_raw para criar o arquivo de autenticação
-    YTMusic.setup(filepath=AUTH_FILE, headers_raw=headers_raw)
+    # Usa a função setup importada para criar o arquivo de autenticação
+    setup(filepath=AUTH_FILE, headers_raw=headers_raw)
     print(f"\n✅ Arquivo de autenticação '{AUTH_FILE}' gerado com sucesso.")
     print("Agora você pode executar o script principal 'spotify_to_ytmusic.py'.")
 
