@@ -50,8 +50,13 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
 ))
 
 # === AUTENTICAZIONE YOUTUBE MUSIC ===
-# Esegui prima lo script 'ytmusic_auth_setup.py' per generare questo file.
-ytmusic = YTMusic("headers_auth.json")
+# Carica l'autenticazione di YouTube Music dal file.
+try:
+    ytmusic = YTMusic("headers_auth.json")
+except FileNotFoundError:
+    print("ERRORE: Il file 'headers_auth.json' non è stato trovato.")
+    print("Per favore, crea il file usando 'headers_auth.json.template' e inserisci il tuo cookie.")
+    sys.exit(1)
 
 # === TRASFERISCI BRANI SALVATI ===
 def trasferisci_brani_salvati():
