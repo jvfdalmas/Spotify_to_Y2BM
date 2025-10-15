@@ -3,13 +3,24 @@ from spotipy.oauth2 import SpotifyOAuth
 from ytmusicapi import YTMusic
 import time
 
-# === CONFIGURAZIONE ===
+# === CONFIGURAZIONE SPOTIFY ===
+# Inserisci qui le tue credenziali API di Spotify.
+# Le trovi nella tua dashboard per sviluppatori: https://developer.spotify.com/dashboard
 SPOTIFY_CLIENT_ID = ''
 SPOTIFY_CLIENT_SECRET = ''
-SPOTIFY_REDIRECT_URI = ''
-SCOPE = ''
+
+# L'URI di reindirizzamento che hai impostato nella tua app Spotify.
+# Per un'esecuzione locale, di solito è 'http://localhost:8888/callback'
+SPOTIFY_REDIRECT_URI = 'http://localhost:8888/callback'
+
+# Lo scope definisce le autorizzazioni che lo script richiede.
+# 'user-library-read' per leggere i brani salvati.
+# 'playlist-read-private' per leggere le playlist private.
+SCOPE = 'user-library-read playlist-read-private'
+
 
 # === AUTENTICAZIONE SPOTIFY ===
+# Assicurati che le credenziali sopra siano state inserite.
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_id=SPOTIFY_CLIENT_ID,
     client_secret=SPOTIFY_CLIENT_SECRET,
@@ -18,7 +29,8 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
 ))
 
 # === AUTENTICAZIONE YOUTUBE MUSIC ===
-ytmusic = YTMusic("headers_auth.json")  # Vedi guida sotto
+# Esegui prima lo script 'ytmusic_auth_setup.py' per generare questo file.
+ytmusic = YTMusic("headers_auth.json")
 
 # === TRASFERISCI BRANI SALVATI ===
 def trasferisci_brani_salvati():
