@@ -19,22 +19,21 @@ pip install spotipy ytmusicapi
 
 Segui questi passaggi per trasferire la tua musica.
 
-### Passaggio 1: Configurare l'Autenticazione di YouTube Music (macOS)
+### Passaggio 1: Configurare l'Autenticazione di YouTube Music
 
-Questo progetto include uno script per automatizzare la configurazione usando la clipboard del macOS.
+Per prima cosa, devi fornire il tuo cookie di autenticazione di YouTube Music. Questo processo é manuale para garantir a estabilidade.
 
-1.  **Apri il browser Brave** (o qualsiasi browser baseado in Chromium) e vai su `music.youtube.com`.
-2.  **Apri gli Strumenti per Sviluppatori** (Cmd+Option+I) e vai alla scheda **Network** (Rete).
-3.  **Trova una richiesta `browse`:** Ricarica la pagina o naviga nella tua libreria. Filtra per `browse` nella barra di ricerca della scheda Network per trovarla facilmente.
-4.  **Copia i cabeçalhos de requisição:**
+1.  **Crea una copia** del file `headers_auth.json.template` e rinominala in `headers_auth.json`.
+2.  **Apri il browser** (Brave, Chrome, etc.) e vai su `music.youtube.com`.
+3.  **Apri gli Strumenti per Sviluppatori** (F12 ou Cmd+Option+I) e vai alla scheda **Network** (Rete).
+4.  **Trova una richiesta `browse`:** Ricarica la pagina o naviga nella tua libreria para que a lista de requisições apareça.
+5.  **Trova e copia il tuo cookie:**
     *   Clicca sulla richiesta `browse`.
     *   Nella scheda **Headers**, scorri verso il basso fino alla sezione **Request Headers**.
-    *   **Copia l'intero blocco di testo** dei cabeçalhos de requisição.
-5.  **Esegui lo script di configurazione:** Apri il terminale e esegui il seguente comando. Questo invierà il contenuto della tua clipboard direttamente allo script:
-    ```bash
-    pbpaste | python setup_ytmusic.py
-    ```
-6.  Se tutto va a buon fine, verrà creato un file `headers_auth.json` e você estará pronto para o próximo passo.
+    *   Trova la riga `cookie:` e **copia solo il valore di questa riga** (a stringa che inizia con `HSID=...`).
+6.  **Incolla il cookie nel file:**
+    *   Apri il tuo file `headers_auth.json`.
+    *   Sostituisci `"INCOLLA_QUI_L_INTERO_COOKIE_DI_YOUTUBE_MUSIC"` con il cookie che hai appena copiato. Assicurati che il cookie esteja entre aspas.
 
 ### Passaggio 2: Configurare le Credenziali dell'API di Spotify
 
@@ -67,7 +66,7 @@ Ora che tutto è configurato, puoi avviare il trasferimento.
 ## File del Progetto
 
 -   `spotify_to_ytmusic.py`: Lo script principale che esegue il trasferimento.
--   `setup_ytmusic.py`: Script per automatizzare la configurazione dell'autenticazione di YouTube Music su macOS.
 -   `test_cookie.py`: Uno script di utilità per verificare se l'autenticazione di YouTube Music (`headers_auth.json`) funziona correttamente.
 -   `.gitignore`: Assicura che i file sensibili (`headers_auth.json`, `spotify_credentials.txt`) non vengano caricati su Git.
+-   `headers_auth.json.template`: Modello per il file di autenticazione di YouTube Music.
 -   `spotify_credentials.txt.template`: Modello per il file di credenziali di Spotify.
