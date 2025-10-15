@@ -2,20 +2,32 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from ytmusicapi import YTMusic
 import time
-import json
 import sys
 
 # === CONFIGURAZIONE SPOTIFY ===
-# Carica le credenziali da un file esterno per motivi di sicurezza.
-# Crea un file 'spotify_credentials.json' usando 'spotify_credentials.json.template' come modello.
-try:
-    with open('spotify_credentials.json') as f:
-        creds = json.load(f)
-        SPOTIFY_CLIENT_ID = creds['SPOTIFY_CLIENT_ID']
-        SPOTIFY_CLIENT_SECRET = creds['SPOTIFY_CLIENT_SECRET']
-except FileNotFoundError:
-    print("ERRORE: Il file 'spotify_credentials.json' non è stato trovato.")
-    print("Per favore, crea il file usando 'spotify_credentials.json.template' e inserisci le tue credenziali.")
+# Carica le credenziali da un file di testo esterno per motivi di sicurezza.
+# Crea un file 'spotify_credentials.txt' usando 'spotify_credentials.txt.template' come modello.
+def get_spotify_creds():
+    creds = {}
+    try:
+        with open('spotify_credentials.txt', 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    key, value = line.split('=', 1)
+                    creds[key.strip()] = value.strip()
+    except FileNotFoundError:
+        print("ERRORE: Il file 'spotify_credentials.txt' non è stato trovato.")
+        print("Per favore, crea il file usando 'spotify_credentials.txt.template' e inserisci le tue credenziali.")
+        sys.exit(1)
+    return creds
+
+spotify_creds = get_spotify_creds()
+SPOTIFY_CLIENT_ID = spotify_creds.get('SPOTIFY_CLIENT_ID')
+SPOTIFY_CLIENT_SECRET = spotify_creds.get('SPOTIFY_CLIENT_SECRET')
+
+if not SPOTIFY_CLIENT_ID or not SPOTIFY_CLIENT_SECRET:
+    print("ERRORE: SPOTIFY_CLIENT_ID o SPOTIFY_CLIENT_SECRET non trovati in 'spotify_credentials.txt'.")
     sys.exit(1)
 
 # L'URI di reindirizzamento che hai impostato nella tua app Spotify.
@@ -29,7 +41,7 @@ SCOPE = 'user-library-read playlist-read-private'
 
 
 # === AUTENTICAZIONE SPOTIFY ===
-# Assicurati che il file 'spotify_credentials.json' sia stato compilato.
+# Assicurati che il file 'spotify_credentials.txt' sia stato compilato.
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_id=SPOTIFY_CLIENT_ID,
     client_secret=SPOTIFY_CLIENT_SECRET,
@@ -38,8 +50,13 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
 ))
 
 # === AUTENTICAZIONE YOUTUBE MUSIC ===
-# Esegui prima lo script 'ytmusic_auth_setup.py' per generare questo file.
-ytmusic = YTMusic("headers_auth.json")
+# Carica l'autenticazione di YouTube Music dal file.
+try:
+    ytmusic = YTMusic("headers_auth.json")
+except FileNotFoundError:
+    print("ERRORE: Il file 'headers_auth.json' non è stato trovato.")
+    print("Per favore, crea il file usando 'headers_auth.json.template' e inserisci il tuo cookie.")
+    sys.exit(1)
 
 # === TRASFERISCI BRANI SALVATI ===
 def trasferisci_brani_salvati():
