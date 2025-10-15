@@ -1,25 +1,5 @@
 from ytmusicapi import YTMusic
 import os
-import sys # <-- AGGIUNGI QUESTA RIGA
-
-# <-- AGGIUNGI QUESTE RIGHE PER IL DEBUG
-print(f"DEBUG: Eseguibile Python: {sys.executable}")
-print(f"DEBUG: sys.path (percorsi di ricerca moduli):")
-for p in sys.path:
-    print(f"  - {p}")
-try:
-    import ytmusicapi
-    print(f"DEBUG: ytmusicapi importato da: {ytmusicapi.__file__}")
-    print(f"DEBUG: ytmusicapi versione: {ytmusicapi.__version__}")
-except Exception as e:
-    print(f"DEBUG: Impossibile importare ytmusicapi o ottenere le sue informazioni: {e}")
-# <-- FINE RIGHE DI DEBUG
-
-# Questo è il nome del file dove verranno salvate le credenziali
-AUTH_FILE = "headers_auth.json"
-
-# ... (il resto del tuo script rimane invariato) ...from ytmusicapi import YTMusic
-import os
 
 # Questo è il file dove verranno salvate le credenziali
 AUTH_FILE = "headers_auth.json"
