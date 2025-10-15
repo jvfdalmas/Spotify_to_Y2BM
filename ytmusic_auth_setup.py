@@ -21,6 +21,8 @@ print("6. Nella nuova finestra, vai alla sezione 'Headers' (o 'Intestazioni').")
 print("7. Scorri verso il basso fino a 'Request Headers' e trova la riga 'cookie'.")
 print("8. Copia l'INTERO valore del campo 'cookie' (è una stringa molto lunga).")
 print("9. Incolla il valore qui sotto quando richiesto.")
+print("\n   NOTA: La stringa del cookie è molto lunga. Quando la incolli nel terminale,")
+print("   potrebbe non essere visualizzata completamente. È normale, premi Invio comunque.")
 print("\nPremi Invio per continuare e incollare il cookie quando richiesto...")
 input() # Attendi che l'utente sia pronto
 
