@@ -2,12 +2,21 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from ytmusicapi import YTMusic
 import time
+import json
+import sys
 
 # === CONFIGURAZIONE SPOTIFY ===
-# Inserisci qui le tue credenziali API di Spotify.
-# Le trovi nella tua dashboard per sviluppatori: https://developer.spotify.com/dashboard
-SPOTIFY_CLIENT_ID = ''
-SPOTIFY_CLIENT_SECRET = ''
+# Carica le credenziali da un file esterno per motivi di sicurezza.
+# Crea un file 'spotify_credentials.json' usando 'spotify_credentials.json.template' come modello.
+try:
+    with open('spotify_credentials.json') as f:
+        creds = json.load(f)
+        SPOTIFY_CLIENT_ID = creds['SPOTIFY_CLIENT_ID']
+        SPOTIFY_CLIENT_SECRET = creds['SPOTIFY_CLIENT_SECRET']
+except FileNotFoundError:
+    print("ERRORE: Il file 'spotify_credentials.json' non è stato trovato.")
+    print("Per favore, crea il file usando 'spotify_credentials.json.template' e inserisci le tue credenziali.")
+    sys.exit(1)
 
 # L'URI di reindirizzamento che hai impostato nella tua app Spotify.
 # Per un'esecuzione locale, di solito è 'http://localhost:8888/callback'
@@ -20,7 +29,7 @@ SCOPE = 'user-library-read playlist-read-private'
 
 
 # === AUTENTICAZIONE SPOTIFY ===
-# Assicurati che le credenziali sopra siano state inserite.
+# Assicurati che il file 'spotify_credentials.json' sia stato compilato.
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_id=SPOTIFY_CLIENT_ID,
     client_secret=SPOTIFY_CLIENT_SECRET,

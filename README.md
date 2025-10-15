@@ -34,17 +34,22 @@ Per prima cosa, devi autenticarti con YouTube Music.
 
 ### Passaggio 2: Configurare le Credenziali dell'API di Spotify
 
-Successivamente, devi configurare le tue credenziali per l'API di Spotify.
+Successivamente, devi configurare le tue credenziali per l'API di Spotify usando un file separato per motivi di sicurezza.
 
-1.  Vai alla tua [Dashboard per sviluppatori di Spotify](https://developer.spotify.com/dashboard) e accedi.
-2.  Crea una nuova app.
-3.  Dopo aver creato l'app, vai su "Settings" e copia il tuo **Client ID** e **Client Secret**.
-4.  Apri il file `spotify_to_ytmusic.py` e incolla il tuo Client ID e Client Secret nelle seguenti variabili:
-    ```python
-    SPOTIFY_CLIENT_ID = 'IL_TUO_CLIENT_ID_QUI'
-    SPOTIFY_CLIENT_SECRET = 'IL_TUO_CLIENT_SECRET_QUI'
+1.  Crea una copia del file `spotify_credentials.json.template` e rinominala in `spotify_credentials.json`.
+2.  Vai alla tua [Dashboard per sviluppatori di Spotify](https://developer.spotify.com/dashboard) e accedi.
+3.  Crea una nuova app (o usane una esistente).
+4.  Dopo aver creato l'app, vai su "Settings" e copia il tuo **Client ID** e **Client Secret**.
+5.  Apri il file `spotify_credentials.json` e incolla il tuo Client ID e Client Secret nei campi corrispondenti:
+    ```json
+    {
+      "SPOTIFY_CLIENT_ID": "IL_TUO_CLIENT_ID_QUI",
+      "SPOTIFY_CLIENT_SECRET": "IL_TUO_CLIENT_SECRET_QUI"
+    }
     ```
-5.  Nelle impostazioni della tua app Spotify, aggiungi un "Redirect URI". Per un'esecuzione locale, `http://localhost:8888/callback` è una scelta comune. Assicurati che questo URI corrisponda a quello nel file `spotify_to_ytmusic.py`.
+6.  Nelle impostazioni della tua app Spotify, aggiungi un "Redirect URI". Per un'esecuzione locale, `http://localhost:8888/callback` è una scelta comune. Assicurati che questo URI corrisponda a quello nello script `spotify_to_ytmusic.py`.
+
+**Importante:** Il file `spotify_credentials.json` è già nel `.gitignore`, quindi le tue credenziali non verranno caricate su Git.
 
 ### Passaggio 3: Eseguire il Trasferimento
 
